@@ -138,18 +138,34 @@ removeModuleInfoFromJars := {
   val libDir = (Universal/stagingDirectory).value / "lib"
 
   // remove all `/module-info.class` from all jars
+  import java.nio.file.{Files, Path, FileSystems}
+  import java.net.URI
+  import java.util.Collections
+
+  // Assuming libDir is a Path representing the directory containing JARs
   Files.walk(libDir.toPath)
     .filter(_.toString.endsWith(".jar"))
     .forEach { jar =>
-      val zipFs = FileSystems.newFileSystem(jar)
+      // Create a URI for the JAR file
+      val uri = new URI("jar:file:" + jar.toAbsolutePath.toString)
+
+      // Use FileSystems.newFileSystem with the URI and an empty map of correct type
+      val zipFs = FileSystems.newFileSystem(uri, Collections.emptyMap[String, Object]())
+
+      // Iterate over the root directories in the JAR
       zipFs.getRootDirectories.forEach { zipRootDir =>
+        // Iterate over the contents of the root directory and look for module-info.class
         Files.list(zipRootDir).filter(_.toString == "/module-info.class").forEach { moduleInfoClass =>
+          // Log and delete module-info.class from the JAR
           logger.info(s"workaround for scala completion bug: deleting $moduleInfoClass from $jar")
           Files.delete(moduleInfoClass)
         }
       }
+
+      // Close the FileSystem after processing the JAR
       zipFs.close()
     }
+
 }
 removeModuleInfoFromJars := removeModuleInfoFromJars.triggeredBy(Universal/stage).value
 

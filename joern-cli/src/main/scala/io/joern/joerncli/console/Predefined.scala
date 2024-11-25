@@ -15,7 +15,7 @@ object Predefined {
       "import _root_.io.shiftleft.semanticcpg.language.*",
       "import scala.jdk.CollectionConverters.*",
       "implicit val resolver: ICallResolver = NoResolve",
-      "implicit val finder: NodeExtensionFinder = DefaultNodeExtensionFinder"
+      "implicit val finder: NodeExtensionFinder = DefaultNodeExtensionFinder",
     )
 
   val forInteractiveShell: Seq[String] = {
@@ -23,7 +23,9 @@ object Predefined {
       Seq("import _root_.io.joern.joerncli.console.Joern.*") ++
       Run.codeForRunCommand().linesIterator ++
       Help.codeForHelpCommand(classOf[io.joern.joerncli.console.JoernConsole]).linesIterator ++
-      Seq("ossDataFlowOptions = opts.ossdataflow")
+      Seq(
+        "val ossDataFlowOptions = opts.ossdataflow"
+      )
   }
 
 }
