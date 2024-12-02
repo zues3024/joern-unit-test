@@ -1,12 +1,12 @@
-package io.joern.console.cpgcreation
+package io.joern.console
 
 import io.shiftleft.codepropertygraph.Cpg
 import io.shiftleft.codepropertygraph.generated.nodes.Method
 import io.shiftleft.semanticcpg.language.*
 
 import java.io.{File, PrintWriter}
-import scala.collection.JavaConverters.*
 import java.nio.file.{Files, Paths}
+import scala.collection.JavaConverters.*
 
 object GenerateUnitTests {
   def analyzeMethods(cpg: Cpg): List[Method] = {

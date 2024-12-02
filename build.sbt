@@ -34,11 +34,11 @@ ThisBuild / libraryDependencies ++= Seq(
 ThisBuild / compile / javacOptions ++= Seq(
   "-g", // debug symbols
   "-Xlint",
-  "--release=11"
+  "--release=21"
 ) ++ {
   // fail early if users with JDK8 try to run this
   val javaVersion = sys.props("java.specification.version").toFloat
-  assert(javaVersion.toInt >= 11, s"this build requires JDK11+ - you're using $javaVersion")
+  assert(javaVersion.toInt >= 21, s"this build requires JDK21+ - you're using $javaVersion")
   Nil
 }
 
