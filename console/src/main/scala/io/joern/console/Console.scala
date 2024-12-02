@@ -463,6 +463,17 @@ class Console[T <: Project](loader: WorkspaceLoader[T], baseDir: File = File.cur
     projectName
   }
 
+  def generateTestsForCpg = new GenerateUnitTests(this)
+//  def generateTests(cpg: Cpg): Unit = {
+//    val testFramework = GenerateUnitTests.detectTestFramework(cpg)
+//    val methods = GenerateUnitTests.analyzeMethods(cpg)
+//
+//    methods.foreach { method =>
+//      val testCode = GenerateUnitTests.generateUnitTest(method, testFramework)
+//      GenerateUnitTests.createTestFile(testCode, method.name)
+//    }
+//  }
+
 }
 
 object Console {
